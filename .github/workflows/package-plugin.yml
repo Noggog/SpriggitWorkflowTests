@@ -14,10 +14,10 @@ jobs:
       
       - name: Download Spriggit
         uses: robinraju/release-downloader@v1.8
-          with:
-            repository: "Mutagen-Modding/Spriggit"
-            tag: "0.5"
-            fileName: "SpriggitCLI.zip"
+        with:
+          repository: "Mutagen-Modding/Spriggit"
+          tag: "0.5"
+          fileName: "SpriggitCLI.zip"
       - name: Run Spriggit
         run: ./.github/spriggit/Spriggit.CLI.exe deserialize --InputPath "${{ github.workspace }}\src\plugin" --OutputPath "${{ github.workspace }}\latest.esp" --PackageName Spriggit.Yaml.Skyrim
       - name: Delete Existing Release
