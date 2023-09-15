@@ -1,0 +1,35 @@
+name: spriggit-out
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - "src/plugin/**/*"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Download Spriggit
+        uses: robinraju/release-downloader@v1.8
+          with:
+            repository: "Mutagen-Modding/Spriggit"
+            tag: "0.5"
+            fileName: "SpriggitCLI.zip"
+      - name: Run Spriggit
+        run: ./.github/spriggit/Spriggit.CLI.exe deserialize --InputPath "${{ github.workspace }}\src\plugin" --OutputPath "${{ github.workspace }}\latest.esp" --PackageName Spriggit.Yaml.Skyrim
+      - name: Delete Existing Release
+        uses: liudonghua123/delete-release-action@v1
+        with:
+          release_name: 'Prerelease'
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          release_name: Prerelease
+          draft: false
+          prerelease: true
