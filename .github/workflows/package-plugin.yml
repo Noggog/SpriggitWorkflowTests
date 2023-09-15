@@ -31,6 +31,13 @@ jobs:
         shell: bash
         run: .github/spriggit/Spriggit.CLI deserialize --InputPath "src/plugin" --OutputPath "${{ github.workspace }}/latest.esp" --PackageName Spriggit.Yaml.Skyrim
 
+      - name: Delete Existing Release
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: nightly
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_release: true
+          
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1.13.0
@@ -43,4 +50,7 @@ jobs:
           body: Nightly release of the latest patch
           tag: nightly
           prerelease: true
+          makeLatest: true
+          removeArtifacts: true
+          replacesArtifacts: true
           artifacts: ${{ github.workspace }}/latest.esp
