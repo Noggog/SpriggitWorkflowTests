@@ -24,11 +24,11 @@ jobs:
 
       - name: fix spriggit permission
         shell: bash
-        run: chmod +x ${{ github.workspace }}/.github/spriggit/Spriggit.CLI
+        run: chmod +x .github/spriggit/Spriggit.CLI
 
       - name: run spriggit
         shell: bash
-        run: ${{ github.workspace }}/.github/spriggit/Spriggit.CLI deserialize --InputPath "${{ github.workspace }}\src\plugin" --OutputPath "${{ github.workspace }}\latest.esp" --PackageName Spriggit.Yaml.Skyrim
+        run: .github/spriggit/Spriggit.CLI deserialize --InputPath "src\plugin" --OutputPath "${{ github.workspace }}\latest.esp" --PackageName Spriggit.Yaml.Skyrim
       
       - name: Delete Existing Release
         uses: liudonghua123/delete-release-action@v1
