@@ -6,7 +6,8 @@ on:
     - "src/plugin/**/*"
   workflow_dispatch:
 jobs:
-  build:
+  publish:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
