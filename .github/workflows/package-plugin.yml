@@ -20,7 +20,7 @@ jobs:
           
       - name: Extract some files
         shell: bash
-        run: 7z x .github/spriggit.zip -o .github/spriggit
+        run: 7z x .github/spriggit.zip -o.github/spriggit
 
       - name: fix spriggit permission
         shell: bash
