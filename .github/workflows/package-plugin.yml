@@ -1,9 +1,7 @@
 name: spriggit-out
 on:
-  push:
-    branches: [ main ]
-    paths:
-    - "src/plugin/**/*"
+  schedule:
+    - cron: '0 9 * * *'
   workflow_dispatch:
 jobs:
   check-changes:
