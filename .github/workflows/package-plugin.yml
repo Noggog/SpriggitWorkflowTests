@@ -6,9 +6,23 @@ on:
     - "src/plugin/**/*"
   workflow_dispatch:
 jobs:
-  publish:
-    permissions: write-all
+  check-changes:
     runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check for changes last 24 hours that modified src/plugin folder
+        id: should_run
+        shell: bash
+        run: echo "should_run=$(git log --since="1 days ago" --name-only | grep 'src/plugin/.*' -c)" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.should_run == 1 }}
+    runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout
         uses: actions/checkout@v2
